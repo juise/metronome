@@ -1,0 +1,13 @@
+{application, metronome, [
+    {description, "Small, fast and sexy metrics processing system"},
+    {vsn, "1.0.0"},
+    {modules, []},
+    {registered, []},
+    {applications, [
+        kernel,
+        stdlib,
+        lager
+    ]},
+    {mod, {metronome_app, []}},
+    {env, []}
+]}.

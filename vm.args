@@ -1,0 +1,33 @@
+## Name of the node
+-name metronome
+
+## Cookie for distributed erlang
+-setcookie DEBUG_COOKIE
+
+## Heartbeat management; auto-restarts VM if it dies or becomes unresponsive
+## (Disabled by default..use with caution!)
+-heart
+
+## Enable kernel poll and a few async threads
++K true
++A 10
+
+## Distribution buffer busy limit (dist_buf_busy_limit)
++zdbbl 8192
+
+## Sets mapping for warning messages
++W w
+
+## Set default heap size of process
+#+hms 10000
+
+## Sets  the number of scheduler threads to create and scheduler
+## threads to set online when SMP support has been enabled.
+#+S 2:2
+
+## Increase number of concurrent ports/sockets
+##-env ERL_MAX_PORTS 4096
+
+## Tweak GC to run more often
+##-env ERL_FULLSWEEP_AFTER 10
+
