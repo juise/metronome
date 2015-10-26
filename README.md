@@ -93,7 +93,7 @@ or
 {Name, {M, F, A, E}, Type}
 ```
 
-where Name is metric name, M — module, F — function, A — parameters and E is proplist key, the which value should be used, is function F returns proplist.
+where Name is metric name, M — module, F — function, A — parameters and E is proplist key, the which value should be used, if function F returns proplist.
 
 By example, the function lhttpc_connections_cnt in myapp module may look like:
 
