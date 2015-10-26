@@ -6,7 +6,7 @@ Small, fast and sexy metrics processing system
 Usage
 -----
 
-For creation or updating of a metrics just a call the update/3 function of the metronome module, having specified in parameters a name of a metric (Name), value (Value) and type (Type: counter, meter or gauge) or just use alias functions: update_counter/2, update_meter/2 or update_gauge/2 with the same set of parameters except the type:
+For creation or updating a metrics just a call the update/3 function of the metronome module, having specified in parameters a name of a metric (Name), value (Value) and type (Type: counter, meter or gauge) or just use alias functions: update_counter/2, update_meter/2 or update_gauge/2 with the same set of parameters except the type:
 
 ```
 1> metronome:update(<<”foo.bar.baz”>>, 1, counter).
