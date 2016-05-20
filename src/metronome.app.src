@@ -1,6 +1,6 @@
 {application, metronome, [
     {description, "Small, fast and sexy metrics processing system"},
-    {vsn, "1.0.0"},
+    {vsn, "1.1.0"},
     {modules, []},
     {registered, []},
     {applications, [
