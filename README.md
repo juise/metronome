@@ -60,6 +60,7 @@ The sample basic metronome configuration, sys.config:
 ```
 {metronome, [
     {period, 10000},
+    {generation, 5},
     {inline, [{“%local%”, “local”},
               {“%global%”, “global”}]},
   
@@ -79,7 +80,7 @@ The sample basic metronome configuration, sys.config:
 ]}
 ```
 
-Here parameter “period” defines a time interval (in milliseconds) through which metronome will transfer the accumulated metrics to target system. The “graphite_host” and “graphite_port” parameters define a host and port of target system respectively. Parameter “inline” allows to do any user substitutions in names of metrics. For substitution of a name of a host just use library substitution %node%. The predefined parameter allows to define metrics which values will automatically gathered by any user functions with the interval defined in the period parameter. The format describing a metrics in record “predefined” is the following:
+Here, parameter “period” defines a time interval (in milliseconds) through which metronome will transfer the accumulated metrics to the target system. In cases when target system is down and don't accept incoming dataset, the memory will grow, and here "generation" parameter comes into play. He soft limits the maximum of used memory based on generation idea, the 1 generation is euqal 1 time interval ("period") during metronome accumulate metrics, zero will disable generation mechanism. The “graphite_host” and “graphite_port” parameters define a host and port of target system respectively. Parameter “inline” allows to do any user substitutions in names of metrics. For substitution of a name of a host just use library substitution %node%. The predefined parameter allows to define metrics which values will automatically gathered by any user functions with the interval defined in the period parameter. The format describing a metrics in record “predefined” is the following:
 
 ```
 {Name, {F}, Type}

@@ -31,7 +31,6 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    erlang:process_flag(trap_exit, true),
     ?TAB = ets:new(?TAB, [named_table, ordered_set, public, {keypos, #metric.name}, {write_concurrency, true}, {read_concurrency, true}]),
     {ok, #state{send_timer = start_interval(), inliners = metronome_util:inliners()}}.
 
@@ -47,6 +46,12 @@ handle_info(send, #state{send_timer = TRef, inliners = Inliners} = State) ->
     catch erlang:cancel_timer(TRef),
     ok = update_predefined(),
     [metronome_graphite:send(metronome_util:inline(metronome:get(Type), Inliners)) andalso metronome:delete(Type) || Type <- ?METRICS],
+    case metronome_util:generation() of
+        0 ->
+            ok;
+        N ->
+            [metronome:delete_outdated(N * metronome_util:period() * -1, Type) || Type <- ?METRICS]
+    end,
     {noreply, State#state{send_timer = start_interval()}};
 
 handle_info(Msg, State) ->

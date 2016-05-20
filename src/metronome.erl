@@ -22,6 +22,7 @@
 
 -export([delete/1,
          delete/2,
+         delete_outdated/2,
          delete_counter/1,
          delete_gauge/1,
          delete_meter/1]).
@@ -157,6 +158,12 @@ delete(Name, Type) ->
     ets:select_delete(?TAB, ets:fun2ms(fun(#metric{name = {MetricName, MetricTimestamp}, type = MetricType} = Metric) when Type == MetricType andalso
                                                                                                                            Name == MetricName andalso
                                                                                                                            Timestamp >= MetricTimestamp -> true end)).
+
+-spec delete_outdated(integer(), metric_type()) -> non_neg_integer().
+delete_outdated(Time, Type) ->
+    Timestamp = metronome_util:timestamp(Time),
+    ets:select_delete(?TAB, ets:fun2ms(fun(#metric{name = {_, MetricTimestamp}, type = MetricType} = Metric) when Type == MetricType andalso
+                                                                                                                  Timestamp >= MetricTimestamp -> true end)).
 
 
 -spec system_status() -> [memory() | io() | run_queue() | process_count() | reductions() | garbage_collection() | context_switches()].

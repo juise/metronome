@@ -6,7 +6,8 @@
          timestamp/1,
          inline/2,
          inliners/0,
-         predefined/0]).
+         predefined/0,
+         generation/0]).
 
 -include("metronome.hrl").
 
@@ -21,8 +22,7 @@ period() ->
 
 -spec timestamp() -> non_neg_integer().
 timestamp() ->
-    {MegaSecs, Secs, _} = os:timestamp(),
-    MegaSecs * 1000000 + Secs.
+    erlang:system_time(seconds).
 
 -spec timestamp(non_neg_integer()) -> non_neg_integer().
 timestamp(Period) ->
@@ -42,6 +42,10 @@ inliners() ->
 -spec predefined() -> metric_map().
 predefined() ->
     application:get_env(metronome, predefined, []).
+
+-spec generation() -> non_neg_integer().
+generation() ->
+    application:get_env(metronome, generation, 0).
 
 %% ===================================================================
 %% Internal functions
